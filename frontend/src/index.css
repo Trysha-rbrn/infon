@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-navy-900 text-white font-semibold text-sm hover:bg-navy-500 transition-colors duration-200 shadow-sm;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-gray-200 text-gray-700 font-semibold text-sm hover:bg-gray-50 transition-colors duration-200 shadow-sm;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gold-500 text-white font-semibold text-sm hover:bg-gold-600 transition-colors duration-200 shadow-sm;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-200;
+  }
+
+  .card:hover {
+    @apply shadow-md -translate-y-0.5;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold;
+  }
+}
+
+/* FullCalendar overrides */
+.fc .fc-toolbar-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1f5e;
+}
+
+.fc .fc-button-primary {
+  background-color: #1a1f5e !important;
+  border-color: #1a1f5e !important;
+  font-size: 0.8rem !important;
+  padding: 0.3rem 0.8rem !important;
+  border-radius: 0.5rem !important;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: #2d3561 !important;
+  border-color: #2d3561 !important;
+}
+
+.fc .fc-button-primary:not(:disabled):active,
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: #f5a623 !important;
+  border-color: #f5a623 !important;
+}
+
+.fc .fc-daygrid-event {
+  border-radius: 4px !important;
+  font-size: 0.75rem !important;
+  padding: 2px 4px !important;
+}
+
+.fc th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.fc .fc-col-header-cell {
+  background-color: #f9fafb;
+  padding: 8px 0 !important;
+}

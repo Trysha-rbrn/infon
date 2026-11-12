@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <title>inFON Logo Export za Canvu</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0d1526;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    .card {
+      background: #1a233a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 32px;
+      text-align: center;
+      max-width: 600px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    svg {
+      width: 320px;
+      height: 320px;
+      margin: 20px auto;
+      display: block;
+    }
+    .btn {
+      background: #f5a623;
+      color: #00254d;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin: 8px;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: #ffb738;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    p {
+      color: #94a3b8;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    canvas {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 style="margin: 0; color: #fff;">inFON Zvanični Logo</h2>
+    <p>Preuzmite logo za Vašu Canvu u PNG (visoka rezolucija 1200x1200px) ili SVG vektorskom formatu sa transparentnom pozadinom.</p>
+
+    <div id="svg-container">
+      <svg id="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 389">
+        <g fill="none" stroke-width="19.5" stroke-linecap="round">
+          <path stroke="#9b95c9" d="M379.0 190.4A184.5 184.5 0 0 1 165.7 375.7"/>
+          <path stroke="#d057a0" d="M339.4 80.1A184.0 184.0 0 1 0 91.5 346.0"/>
+          <path stroke="#60c3ad" d="M332.6 217.8A140.2 140.2 0 1 1 106.3 84.5"/>
+          <path stroke="#ffcd67" d="M323.7 138.7A140.3 140.3 0 0 0 160.5 57.4"/>
+          <path stroke="#004b7c" d="M100.2 212.1A96.1 96.1 0 1 1 139.1 272.0"/>
+          <path stroke="#f48580" d="M146.2 172.6A52.6 52.6 0 1 0 185.0 141.8"/>
+        </g>
+        <g transform="translate(194.5 194) scale(1.15)">
+          <path d="M-22 -3V20" fill="none" stroke="#ffffff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="-22" cy="-19" r="7" fill="#ffb020"/>
+          <circle cx="-22" cy="-19" r="14" fill="none" stroke="#ffb020" stroke-width="2" opacity="0.6"/>
+          <path d="M-5 20V6Q-5 -4 9 -4Q23 -4 23 6V20" fill="none" stroke="#ffffff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </svg>
+    </div>
+
+    <div>
+      <button class="btn" onclick="downloadPNG()">Preuzmi Transparentni PNG (1200px)</button>
+      <button class="btn btn-secondary" onclick="downloadSVG()">Preuzmi Vektorski SVG</button>
+    </div>
+    <p style="margin-top: 15px; font-size: 12px;">U Canvi samo idite na <b>Uploads &rarr; Upload files</b> i prevucite preuzeti fajl na slajd!</p>
+  </div>
+
+  <canvas id="export-canvas" width="1200" height="1200"></canvas>
+
+  <script>
+    function downloadSVG() {
+      const svgData = document.getElementById('logo-svg').outerHTML;
+      const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'inFON-logo.svg';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadPNG() {
+      const svg = document.getElementById('logo-svg');
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const canvas = document.getElementById('export-canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const img = new Image();
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, 1200, 1200);
+        URL.revokeObjectURL(url);
+
+        const pngUrl = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = pngUrl;
+        a.download = 'inFON-logo-canva.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      };
+      img.src = url;
+    }
+  </script>
+</body>
+</html>
